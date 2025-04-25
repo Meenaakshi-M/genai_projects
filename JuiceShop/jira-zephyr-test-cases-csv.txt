@@ -1,0 +1,81 @@
+Summary,Description,Component,Labels,Issue Type,Priority,Status,Precondition,Test Steps,Test Data,Expected Result,Assignee,Fix Version,Reporter
+User Registration - Valid Data,"Test case for registering a new user with valid data",User Management,regression;functional,Test,High,To Do,"Juice Shop application is accessible
+User does not have an existing account","Step 1: Navigate to the Registration page
+Step 2: Enter valid email address
+Step 3: Enter valid password (meeting complexity requirements)
+Step 4: Select security question and provide answer
+Step 5: Click ""Register"" button","Email: newuser@example.com
+Password: Password123!
+Security Question: First pet's name
+Answer: Fluffy","1. User is successfully registered
+2. Confirmation message is displayed
+3. User can login with created credentials
+4. User is redirected to the home page after login",,,
+User Login - Valid Credentials,"Test case for logging in with valid credentials",User Management,regression;critical-path,Test,High,To Do,"Juice Shop application is accessible
+User has a registered account with email ""user@example.com"" and password ""Password123!""","Step 1: Navigate to the Login page
+Step 2: Enter email ""user@example.com""
+Step 3: Enter password ""Password123!""
+Step 4: Click ""Log in"" button","Email: user@example.com
+Password: Password123!","1. User is successfully logged in
+2. User is redirected to the home page
+3. Navigation menu displays logged-in user options",,,
+SQL Injection in Login Form,"Test case for validating protection against SQL injection in login form",Security,security;injection,Test,Highest,To Do,"Juice Shop application is accessible
+Login form is available","Step 1: Navigate to the login page
+Step 2: Enter ' OR 1=1 -- in the email field
+Step 3: Enter any value in the password field
+Step 4: Click ""Log in"" button","Email: ' OR 1=1 --
+Password: anyvalue","1. Login attempt fails
+2. No database error is exposed
+3. No unauthorized access is granted
+4. Application logs the attempt as a potential attack",,,
+Add Item to Basket,"Test case for adding products to the shopping basket",Shopping Functionality,regression;functional,Test,High,To Do,"Juice Shop application is accessible
+User is logged in
+Product inventory is available","Step 1: Navigate to product page
+Step 2: Click ""Add to Basket"" button for a product
+Step 3: Navigate to shopping basket","Product: Apple Juice","1. Product is added to basket
+2. Basket icon updates to show item count
+3. Product appears correctly in basket with correct price",,,
+Product Search - Valid Term,"Test case for searching products with valid search term",Product Management,regression;functional,Test,High,To Do,"Juice Shop application is accessible
+Products exist in the system
+At least one product contains the word ""Apple""","Step 1: Navigate to the home page
+Step 2: Enter ""Apple"" in the search field
+Step 3: Press Enter or click search icon","Search term: Apple","1. Search results page displays all products containing ""Apple""
+2. No unrelated products are shown
+3. Result count is accurate",,,
+Get All Products API,"Test case for validating the Get All Products API endpoint",API,api;functional,Test,High,To Do,"Juice Shop API is accessible
+Products exist in the database","Step 1: Send GET request to ""/api/Products"" endpoint
+Step 2: Observe response","Endpoint: /api/Products
+Method: GET","1. API returns 200 OK status
+2. Response contains JSON array of products
+3. Each product has expected properties (id, name, price, etc.)",,,
+XSS in Product Reviews,"Test case for validating protection against XSS in product reviews",Security,security;xss,Test,Highest,To Do,"Juice Shop application is accessible
+User is logged in
+Product review functionality exists","Step 1: Navigate to a product page
+Step 2: Add a review containing XSS payload: <script>alert('XSS')</script>
+Step 3: Submit the review
+Step 4: View the posted review","Review text: <script>alert('XSS')</script>","1. Script is not executed
+2. Input is either rejected or properly sanitized
+3. Review text is displayed as plain text or safely escaped HTML",,,
+Vertical Privilege Escalation,"Test case for validating protection against privilege escalation",Security,security;access-control,Test,Highest,To Do,"Juice Shop application is accessible
+User is logged in with regular user account
+Admin functions exist at ""/administration"" path","Step 1: Login as regular user
+Step 2: Attempt to access ""/administration"" directly via URL
+Step 3: Observe response","URL: /administration","1. Access is denied
+2. User is redirected to an appropriate page
+3. Error message does not reveal sensitive information
+4. Attempt is logged",,,
+Mobile Layout,"Test case for validating responsive design on mobile",UI,ui;responsive,Test,High,To Do,"Juice Shop application is accessible
+Testing device has mobile viewport (or emulated mobile viewport)","Step 1: Access Juice Shop on mobile device or with mobile emulation
+Step 2: Navigate through different pages (home, product details, basket)
+Step 3: Test core functionality (search, add to basket, checkout)","Device width: 375px
+Device height: 812px","1. UI adapts correctly to mobile viewport
+2. All content is visible and properly arranged
+3. Key functions work as expected on mobile",,,
+Secure Transmission of Credentials,"Test case for validating secure transmission of login credentials",Security,security;data-protection,Test,Highest,To Do,"Juice Shop application is accessible
+Login functionality exists","Step 1: Start a network traffic capture
+Step 2: Navigate to login page
+Step 3: Enter credentials and submit
+Step 4: Examine captured traffic","Email: user@example.com
+Password: Password123!","1. Traffic is encrypted (HTTPS)
+2. Credentials are not visible in clear text
+3. Proper TLS version and cipher suites are used",,,
