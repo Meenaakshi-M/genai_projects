@@ -176,4 +176,3 @@ cython_debug/
 
 # Mac system files
 .DS_Store
-.code-workspace
