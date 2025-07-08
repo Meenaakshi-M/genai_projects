@@ -1,14 +1,16 @@
-from ai_health_analyzer import analyze_health_report_with_ai
+import json, time, os
+from urllib.parse import urljoin, urlparse
+
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin, urlparse
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from webdriver_manager.chrome import ChromeDriverManager
-import json
-import time
-import os
+
+#from ai_health_analyzer import analyze_health_report_with_ai
+from langchain_prioritizer import analyze_with_langchain_cot
+
 
 # --- Configuration ---
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 PortfolioHealthChecker/1.0"
@@ -190,22 +192,25 @@ if __name__ == "__main__":
     if not target_url.startswith(('http://', 'https://')):
         print("Invalid URL. Please include http:// or https://")
     else:
-        health_report = run_website_health_checks(target_url)
+        health_report_dict = run_website_health_checks(target_url)
 
         # Output the raw JSON report
         print("\n\n--- Raw JSON Health Report ---")
-        health_report_json_str = json.dumps(health_report, indent=2)
+        health_report_json_str = json.dumps(health_report_dict, indent=2)
         print(health_report_json_str)
 
         # You can save this JSON to a file if needed
         with open('health_report.json', 'w') as f:
-             json.dump(health_report, f, indent=2)
+             json.dump(health_report_dict, f, indent=2)
         print("\nReport saved to health_report.json")
 
         # --- Call the AI Analyzer ---
-        print("\n\n--- AI-Powered Analysis & Summary ---")
+        print("\n\n--- Langchain CoT Analysis & Prioritization ---")
         if os.getenv("OPENAI_API_KEY"): # Only proceed if API key is available
-            ai_summary = analyze_health_report_with_ai(health_report_json_str)
+            ai_summary = analyze_with_langchain_cot(health_report_json_str)
             print(ai_summary)
+            
+            print("\n\n\n")
+
         else:
-            print("Skipping AI analysis: OPENAI_API_KEY not set.")
+            print("Skipping Langchain analysis: OPENAI_API_KEY not set.")
